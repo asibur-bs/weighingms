@@ -1,0 +1,148 @@
+STEP 18 — Dummy OrgaTEX API tests
+Port: 8787  Host: 127.0.0.1
+When: 2026-10-26T14:28:00Z
+
+=== Vitest ===
+Command: npm test
+Test Files  1 passed (1)
+Tests       9 passed (9)
+File: tests/api/orgatex.test.ts
+
+=== curl GET /api/batches ===
+URL: http://127.0.0.1:8787/api/batches
+{
+  "batches": [
+    {
+      "id": "B-24187",
+      "order": "SO-9931",
+      "machine": "JET-04",
+      "fabric": "100% CTN knit · 480 kg",
+      "shade": "Teal 4C",
+      "componentCount": 5,
+      "status": "WEIGHING"
+    },
+    {
+      "id": "B-24188",
+      "order": "SO-9931",
+      "machine": "JET-07",
+      "fabric": "100% CTN knit · 520 kg",
+      "shade": "Teal 4C",
+      "componentCount": 5,
+      "status": "QUEUED"
+    },
+    {
+      "id": "B-24190",
+      "order": "SO-9944",
+      "machine": "JET-02",
+      "fabric": "CVC fleece · 310 kg",
+      "shade": "Navy 12",
+      "componentCount": 7,
+      "status": "QUEUED"
+    },
+    {
+      "id": "B-24191",
+      "order": "SO-9947",
+      "machine": "WINCH-01",
+      "fabric": "Viscose jersey · 190 kg",
+      "shade": "Rose 08",
+      "componentCount": 4,
+      "status": "QUEUED"
+    }
+  ]
+}
+HTTP 200
+
+=== curl GET /api/batches/B-24187 ===
+URL: http://127.0.0.1:8787/api/batches/B-24187
+{
+  "id": "B-24187",
+  "order": "SO-9931",
+  "machine": "JET-04",
+  "fabric": "100% CTN knit · 480 kg",
+  "shade": "Teal 4C",
+  "componentCount": 5,
+  "status": "WEIGHING"
+}
+HTTP 200
+
+=== curl GET /api/batches/B-24187/recipe ===
+URL: http://127.0.0.1:8787/api/batches/B-24187/recipe
+{
+  "batchId": "B-24187",
+  "components": [
+    {
+      "seq": 1,
+      "name": "Remazol Brill. Blue RSPL",
+      "code": "DYE-1180",
+      "target": 1240,
+      "unit": "g",
+      "tol": 6,
+      "scale": "3 kg precision",
+      "lot": "2026-0341",
+      "container": "C-09",
+      "tare": 214,
+      "tareUnit": "g"
+    },
+    {
+      "seq": 2,
+      "name": "Remazol Red RB",
+      "code": "DYE-2204",
+      "target": 386,
+      "unit": "g",
+      "tol": 2,
+      "scale": "3 kg precision",
+      "lot": "2026-0298",
+      "container": "C-11",
+      "tare": 214,
+      "tareUnit": "g"
+    },
+    {
+      "seq": 3,
+      "name": "Remazol Yellow RGB",
+      "code": "DYE-4471",
+      "target": 94,
+      "unit": "g",
+      "tol": 0.5,
+      "scale": "3 kg precision",
+      "lot": "2026-0387",
+      "container": "C-12",
+      "tare": 214,
+      "tareUnit": "g"
+    },
+    {
+      "seq": 4,
+      "name": "Sodium Sulphate",
+      "code": "AUX-0101",
+      "target": 24,
+      "unit": "kg",
+      "tol": 0.12,
+      "scale": "32 kg floor",
+      "lot": "2026-0112",
+      "container": "D-03",
+      "tare": 1.85,
+      "tareUnit": "kg"
+    },
+    {
+      "seq": 5,
+      "name": "Soda Ash",
+      "code": "AUX-0107",
+      "target": 9.6,
+      "unit": "kg",
+      "tol": 0.048,
+      "scale": "32 kg floor",
+      "lot": "2026-0155",
+      "container": "D-05",
+      "tare": 1.85,
+      "tareUnit": "kg"
+    }
+  ]
+}
+HTTP 200
+
+=== curl GET /api/batches/NOPE ===
+URL: http://127.0.0.1:8787/api/batches/NOPE
+{
+  "error": "batch_not_found"
+}
+HTTP 404
+
