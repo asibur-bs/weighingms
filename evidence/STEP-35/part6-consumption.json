@@ -1,0 +1,33 @@
+{
+  "request": "GET /api/batches/B-24187/consumption",
+  "responseStatus": 200,
+  "storedRecord": {
+    "id": 5,
+    "batchId": "B-24187",
+    "operator": "R. Karim",
+    "timestamp": "2026-10-27T07:36:23.791Z",
+    "components": [
+      {
+        "code": "DYE-1180",
+        "actual": 1240
+      },
+      {
+        "code": "DYE-2204",
+        "actual": 386
+      },
+      {
+        "code": "DYE-4471",
+        "actual": 94
+      },
+      {
+        "code": "AUX-0101",
+        "actual": 24
+      },
+      {
+        "code": "AUX-0107",
+        "actual": 9.6
+      }
+    ]
+  },
+  "recordCount": 5
+}
