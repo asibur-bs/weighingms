@@ -14,7 +14,9 @@ npm start          # Dummy APIs  http://127.0.0.1:8787
 npm run dev:web    # Operator HMI http://127.0.0.1:5173
 ```
 
-Open **http://127.0.0.1:5173/**. The HMI loads the queue from `GET /api/batches` (Vite proxies `/api` → `:8787`). Training batch: **B-24187**.
+Open **http://127.0.0.1:5173/**. Click training batch **B-24187**. There is no hardware scale — on the weigh screen use **Set dummy weight**, then **OK · Confirm**, for each of the five components.
+
+Newcomer walkthrough (click-by-click): [`docs/HOW-TO-USE.md`](docs/HOW-TO-USE.md).
 
 ```bash
 npm test           # Vitest 47

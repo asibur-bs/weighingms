@@ -117,6 +117,16 @@ export function getScaleStatus(scaleId: string): Promise<ScaleStatus> {
   return request(`/api/scales/${encodeURIComponent(scaleId)}/status`);
 }
 
+export function setDummyWeight(
+  scaleId: string,
+  net: number,
+): Promise<{ scaleId: string; net: number; unit: string; tare: number }> {
+  return request(`/api/dummy/scales/${encodeURIComponent(scaleId)}/weight`, {
+    method: "POST",
+    body: JSON.stringify({ net }),
+  });
+}
+
 export function printTicket(sessionId: string): Promise<WeighingTicket> {
   return request("/api/tickets", {
     method: "POST",

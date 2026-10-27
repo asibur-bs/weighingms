@@ -14,6 +14,7 @@ import {
   probePrinter,
   quitSession,
   scannerLookup,
+  setDummyWeight,
   startSession,
   tareSession,
 } from "./api.ts";
@@ -78,6 +79,7 @@ export function App() {
   const [overrideNote, setOverrideNote] = useState<string | null>(null);
   const [writeback, setWriteback] = useState<{ ok: boolean; at?: string } | null>(null);
   const [ticket, setTicket] = useState<WeighingTicket | null>(null);
+  const [dummyNet, setDummyNet] = useState("");
   const [busy, setBusy] = useState(false);
   const busyRef = useRef(false);
   const viewRef = useRef(view);
@@ -204,6 +206,14 @@ export function App() {
     [session],
   );
 
+  useEffect(() => {
+    if (!active) {
+      setDummyNet("");
+      return;
+    }
+    setDummyNet(formatQty(active.target, active.unit));
+  }, [active?.seq, active?.target, active?.unit]);
+
   const finishIfComplete = async (snap: SessionSnapshot) => {
     if (!snap.completeAllowed) return;
     try {
@@ -284,6 +294,21 @@ export function App() {
     }
   };
 
+  const onSetDummyWeight = async () => {
+    if (!active) return;
+    const net = Number(dummyNet);
+    if (!Number.isFinite(net)) {
+      setError("Enter a dummy weight");
+      return;
+    }
+    try {
+      await setDummyWeight(active.scaleId, net);
+      setError(null);
+    } catch (err) {
+      setError(failMessage(err));
+    }
+  };
+
   const onPrint = async () => {
     if (!session || session.lifecycle !== "completed") return;
     try {
@@ -356,7 +381,7 @@ export function App() {
               <div className="beam" aria-hidden="true" />
               <div>
                 <div className="big">Scan a batch card to begin</div>
-                <div className="sm">Or touch a row below. Queue received from OrgaTEX.</div>
+                <div className="sm">Or touch a row below. Queue received from OrgaTEX. Training batch: B-24187.</div>
                 <div className="scan-row">
                   <input
                     data-testid="scan-input"
@@ -512,6 +537,39 @@ export function App() {
                 </div>
                 <div className="status-line" data-zone={viz} data-testid="status-line">
                   {overrideNote ?? statusCopy(zone, evaluation?.remaining ?? 0, unit, scaleDown)}
+                </div>
+                <div className="training" data-testid="training-panel">
+                  <div className="training-copy">
+                    <span className="k">Training · dummy scale</span>
+                    <span className="n">
+                      There is no hardware scale. The box is pre-filled with this component&apos;s target.
+                      Click <b>Set dummy weight</b>, wait for <b>Weighed now</b> to match, then <b>OK · Confirm</b>.
+                    </span>
+                  </div>
+                  <div className="training-row">
+                    <label className="training-field">
+                      Dummy net ({unit})
+                      <input
+                        data-testid="dummy-weight-input"
+                        value={dummyNet}
+                        inputMode="decimal"
+                        onChange={(e) => setDummyNet(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") void onSetDummyWeight();
+                        }}
+                        aria-label="Dummy scale net weight"
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className="key"
+                      data-testid="btn-set-dummy-weight"
+                      disabled={!active || scaleDown || busy}
+                      onClick={() => void onSetDummyWeight()}
+                    >
+                      Set dummy weight
+                    </button>
+                  </div>
                 </div>
               </div>
               <div className={zone === "over" ? "surplus on" : "surplus"} data-testid="surplus">

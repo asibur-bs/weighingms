@@ -40,6 +40,16 @@ test("S1 loads queue from GET /api/batches and opens B-24187 from API", async ({
   expect(apiGets).toContain("/api/batches/B-24187/recipe");
 });
 
+test("training panel sets dummy weight and enables Confirm", async ({ page }) => {
+  await openB24187(page);
+  await expect(page.getByTestId("training-panel")).toBeVisible();
+  await expect(page.getByTestId("dummy-weight-input")).toHaveValue("1240.0");
+  await page.getByTestId("btn-set-dummy-weight").click();
+  await waitWeighedNow(page, "1240.0");
+  await expect(page.getByTestId("btn-confirm")).toBeEnabled();
+  await expect(page.getByTestId("status-line")).toContainText("WITHIN TOLERANCE");
+});
+
 test("B-24187 happy path: five confirms, scale switch, ticket", async ({ page }) => {
   await openB24187(page);
   await weighThroughYellow(page);

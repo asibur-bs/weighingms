@@ -201,6 +201,36 @@ table.q tr.sel td { background: var(--hmi-panel-2); }
 .status-line[data-zone="over"] { color: var(--over); border-color: rgba(232,80,58,.45); }
 .status-line[data-zone="near"] { color: var(--warn); border-color: rgba(240,167,38,.45); }
 
+.training {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px dashed rgba(91,140,196,.55);
+  border-radius: 3px;
+  background: rgba(91,140,196,.08);
+}
+.training-copy { display: flex; flex-direction: column; gap: 4px; }
+.training-copy .k {
+  font-size: 10px; letter-spacing: .13em; text-transform: uppercase;
+  color: var(--steel); font-weight: 650;
+}
+.training-copy .n { font-size: 13px; color: var(--hmi-muted); line-height: 1.4; }
+.training-copy .n b { color: var(--hmi-ink); font-weight: 650; }
+.training-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end; }
+.training-field {
+  display: flex; flex-direction: column; gap: 5px;
+  font-size: 10px; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--hmi-dim); font-weight: 650;
+}
+.training-field input {
+  font: inherit; font-family: var(--mono); font-size: 18px; font-weight: 600;
+  min-width: 140px; min-height: 48px; padding: 0 12px;
+  background: var(--hmi-bg); color: var(--hmi-ink);
+  border: 1px solid var(--hmi-line); border-radius: 3px;
+}
+.training-row .key { min-height: 48px; min-width: 168px; font-size: 14px; }
+
 .surplus {
   display: none; border: 1px solid rgba(232,80,58,.45); border-radius: 3px;
   background: rgba(232,80,58,.07); padding: 13px 15px; flex-direction: column; gap: 6px;

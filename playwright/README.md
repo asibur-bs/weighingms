@@ -2,7 +2,7 @@
 
 Operator HMI suite for WeighingMS. Specs live next to the API tests:
 
-- `tests/e2e/station.spec.ts` — S1 queue from API; B-24187 five confirms, 3 kg → 32 kg, ticket
+- `tests/e2e/station.spec.ts` — S1 queue from API; training dummy-weight panel; B-24187 five confirms, 3 kg → 32 kg, ticket
 - `tests/e2e/failures.spec.ts` — OrgaTEX / scale / printer unavailable; Re-tare; Quit
 - `tests/e2e/helpers.ts`
 
